@@ -66,6 +66,10 @@ class Document(BaseDocument):
     def drop_collection(self) -> None:
         ...
 
+    @classmethod
+    def register_delete_rule(self, q: Type[_U], target: str, method: int) -> None:
+        ...
+
 
 
 class EmbeddedDocument(BaseDocument):
