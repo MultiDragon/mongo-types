@@ -5,6 +5,7 @@ from typing import Any, Dict, Mapping, Optional, Type, TypeVar
 import mongoengine.errors as errors
 from mongoengine.base import BaseDocument
 from mongoengine.fields import StringField
+from mongoengine.queryset.manager import QuerySetManager
 from pymongo.collection import Collection
 from typing_extensions import TypedDict
 
@@ -20,6 +21,7 @@ class Document(BaseDocument):
     meta: _MetaDict
     _meta: _UnderMetaDict
     _fields: Dict[str, Any]
+    objects: QuerySetManager[_U]
 
     pk = StringField(required=True)
     @classmethod
@@ -60,6 +62,11 @@ class Document(BaseDocument):
         from: https://github.com/python/peps/commit/ada7d3566e26edf5381d1339b61e48a82c51c566#diff-da7d638a3d189515209a80943cdc8eaf196b75d20ccc0d6a796393c025d1f975R1169
         """
         ...
+    @classmethod
+    def drop_collection(self) -> None:
+        ...
+
+
 
 class EmbeddedDocument(BaseDocument):
     _fields: Dict[str, Any]
